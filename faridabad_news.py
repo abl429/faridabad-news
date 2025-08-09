@@ -51,7 +51,7 @@ HTML_TEMPLATE = """
             {% endif %}
         {% endfor %}
     </div>
-    <footer>⚡ Fatafat News — Faridabad ⚡</footer>
+    <footer>⚡ Fatafat News — Faridabad(By MR. Bhagat ⚡</footer>
 </body>
 </html>
 """
