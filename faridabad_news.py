@@ -71,7 +71,7 @@ def fetch_news():
     for category, urls in feeds.items():
         news_data[category] = []
         for url in urls:
-            feed = feedparser.parse(url)
+            feed = feedparser.parse(url, request_headers={'User-Agent': 'Mozilla/5.0'})
             for entry in feed.entries[:10]:
                 news_data[category].append({
                     "title": entry.title,
@@ -98,8 +98,10 @@ def english_news():
 def hindi_news():
     return render_template_string(HTML_TEMPLATE, news=news_data, show_all=False, filter_category="hindi")
 
+# Always run at import (works with gunicorn on Render)
+print("🚀 Starting Faridabad News backend...")
+fetch_news()
+threading.Thread(target=background_updater, daemon=True).start()
+
 if __name__ == "__main__":
-    print("🚀 Starting Faridabad News backend...")
-    fetch_news()
-    threading.Thread(target=background_updater, daemon=True).start()
     app.run(host="0.0.0.0", port=5000, debug=False)
